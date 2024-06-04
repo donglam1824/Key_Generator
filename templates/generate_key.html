@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Tạo License Key</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="static\style.css">
+    </head>
+    <body>
+        <div class = "container">
+            <div class = "column">
+                <h2> Tạo Key </h2>
+                <form method = "POST">
+                    {% csrf_token %}
+                    <button type="submit">Tạo Key</button>
+                </form>
+            </div>
+            <div class = "column">
+                <h2> Danh sách key đã tạo </h2>
+                    <table>
+                        {% for key in license_keys %}
+                            <tr {% if key.is_valid %} class = "valid"
+                                {% else %} class = "invalid"
+                                {% endif %}>
+                                <td>{{ key.key }}</td>
+                                <td style="text-align: right;">
+                                    <a href="{% url 'refresh_key' key.id %}">Làm mới</a>
+                                    <a href="{% url 'delete_key' key.id %}">Xóa</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% if messages %}
+                <ul class = "messages">
+                    {% for message in messages  %}
+                    <li {% if message.tags %} class = "{{ message.tags }}" {% endif %}
+                    {% endfor %}
+                </ul>        
+                {% endif %}
+            </div>
+        </div>     
+        <script src="" async defer></script>
+    </body>
+</html>

@@ -1,0 +1,58 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  font-family: sans-serif; /* Thêm font chữ dễ đọc */
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px; /* Thêm khoảng cách giữa tiêu đề và form */
+}
+
+form {
+  width: 400px; /* Giới hạn chiều rộng form */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Bo góc form */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Thêm đổ bóng */
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block; /* Đảm bảo label chiếm toàn bộ chiều rộng */
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Bao gồm padding và border trong chiều rộng */
+}
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}

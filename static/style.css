@@ -1,0 +1,37 @@
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+  
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.container {
+    display: flex;
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+
+.column {
+    width: 50%;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+}
+
+.column:last-child {
+    border-right: none;    /* bo duong ke o cot cuoi cung */
+}
+
+.valid {
+    color: green; /* Màu xanh cho key còn hiệu lực */
+}
+
+.invalid {
+    color: red; /* Màu đỏ cho key hết hiệu lực */
+}
+
