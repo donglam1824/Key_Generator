@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% load custom_filter %}
+
 
 <html>
     <head>
@@ -17,6 +19,13 @@
                     {% csrf_token %}
                     <button type="submit">Tạo Key</button>
                 </form>
+                <form method = "POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <input type = "file" name = "key_file" accept = ".txt">
+                    
+                    <button type="submit">Tải lên Key</button>
+                </form>
             </div>
             <div class = "column">
                 <h2> Danh sách key đã tạo </h2>
@@ -25,10 +34,11 @@
                             <tr {% if key.is_valid %} class = "valid"
                                 {% else %} class = "invalid"
                                 {% endif %}>
-                                <td>{{ key.key }}</td>
+                                    <td>{{ key.key|truncate_key }}</td>     <!-- Ap dung filter-->
                                 <td style="text-align: right;">
-                                    <a href="{% url 'refresh_key' key.id %}">Làm mới</a>
-                                    <a href="{% url 'delete_key' key.id %}">Xóa</a>
+                                    <button onclick="location.href='{% url 'refresh_key' key.id %}'">Làm mới</button>
+                                    <button onclick="location.href='{% url 'delete_key' key.id %}'">Xóa</button>
+                                    <button data-key="{{ key.key }}" onclick="copy(this)">Sao chép</button>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -42,6 +52,6 @@
                 {% endif %}
             </div>
         </div>     
-        <script src="" async defer></script>
+        <script src="static\copy.js" async defer></script>
     </body>
 </html>

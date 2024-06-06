@@ -1,6 +1,7 @@
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 import secrets
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import LicenseKey
@@ -25,9 +26,19 @@ def generateKey(length = 25):
 @user_passes_test(lambda u: u.is_superuser)
 @login_required(login_url='login')
 def generate_key_byadmin(request):
-    license_keys = LicenseKey.objects.all()    #lay danh sach key
+    license_keys = LicenseKey.objects.all() 
+       #lay danh sach key
+    if request.method == "POST" and 'key_file' in request.FILES:
+        key_file = request.FILES['key_file']
 
-    if request.method == "POST":
+        if key_file.name.endswith('.txt'):  #Kiem tra dinh dang file
+            key_data = key_file.read().decode('utf-8')
+            license_key = LicenseKey(key = key_data)
+            license_key.save()
+            return render(request, 'generate_key.html', {'license_keys': license_keys})
+        else:
+            return render(request, 'generate_key.html', {'license_keys': license_keys})
+    elif request.method == "POST":
         key = generateKey()
         license_key = LicenseKey(key = key)
         license_key.save()
@@ -56,3 +67,10 @@ def delete_key(request, key_id):
     except LicenseKey.DoesNotExist:
         messages.error(request, 'Key không tồn tại.')
     return redirect('generate_key_byadmin')
+
+@user_passes_test(lambda u: u.is_superuser)
+@login_required(login_url='login')
+def copy_key(request, key_id):
+    key = get_object_or_404(LicenseKey, pk=key_id)
+    return render(request, 'generate_key.html', {'key': key, 'license_keys': LicenseKey.objects.all()})
+        

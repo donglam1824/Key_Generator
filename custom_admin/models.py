@@ -3,7 +3,7 @@ from django.utils import timezone
 from datetime import timedelta
 # Create your models here.
 class LicenseKey(models.Model):
-    key = models.CharField(max_length=100, unique=True)
+    key = models.TextField(default="")
     created_time = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=True)
 
