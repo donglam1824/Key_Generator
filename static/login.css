@@ -44,15 +44,22 @@ form {
   margin-bottom: 10px;
 }
 
-button[type="submit"] {
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.button-group button { /* Áp dụng cho cả hai nút */
   background-color: #4CAF50;
   color: white;
   padding: 10px 15px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  flex: 1;
+  transition: background-color 0.3s ease;
 }
 
-button[type="submit"]:hover {
+.button-group button:hover {
   background-color: #45a049;
 }
