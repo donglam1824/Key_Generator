@@ -1,6 +1,6 @@
 from django.urls import path
 from custom_admin import views
-from custom_admin.views import AdminLoginView, custom_logout_view
+from custom_admin.views import AdminLoginView, custom_logout_view, LicenseKeyListAPIView
 
 urlpatterns = [
     path('', AdminLoginView.as_view(), name='login'),
@@ -10,4 +10,5 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('check_key', views.check_key, name='check_key'),
     path('logout/', custom_logout_view, name='logout'),
+    path('license-keys/', LicenseKeyListAPIView.as_view(), name='license-key-list-create'),
 ]

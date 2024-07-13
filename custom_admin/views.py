@@ -9,7 +9,9 @@ from django.contrib.auth.views import LoginView
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import logout
-
+from .serializers import KeySerializer
+from rest_framework import generics
+from rest_framework.permissions import AllowAny, IsAuthenticated
 # Create your views here.
 
 class AdminLoginView(LoginView):
@@ -92,6 +94,26 @@ def copy_key(request, key_id):
     return render(request, 'generate_key.html', {'key': key, 'license_keys': LicenseKey.objects.all()})
 
 def check_key(request):  
-    return render(request, "templates\check_key.html")
+    if request.method == 'POST':
+        key_value = request.POST.get('key')
+
+        try: 
+            license_key = LicenseKey.objects.get(key=key_value)
+            if license_key.is_active:
+                message = f"The key '{key_value}' is active."
+            else:
+                message = f"The key '{key_value}' is inactive."
+        except LicenseKey.DoesNotExist:
+            message = f"The key '{key_value}' does not exist."
+
+        return render(request, 'check_key.html', {'message': message}) 
+    return render(request, 'check_key.html')
+
+class LicenseKeyListAPIView(generics.ListCreateAPIView):
+    queryset = LicenseKey.objects.all()
+    serializer_class = KeySerializer
+    permission_classes = [AllowAny]
+
+
         
 
